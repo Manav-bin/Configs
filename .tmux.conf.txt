@@ -1,0 +1,54 @@
+# Set prefix to Ctrl+a (like GNU screen)
+unbind C-b
+set-option -g prefix C-a
+bind-key C-a send-prefix
+
+# Reload config
+bind r source-file ~/.tmux.conf \; display-message "Config reloaded!"
+
+# Better split commands
+bind h split-window -h
+bind v split-window -v
+unbind '"'
+unbind %
+
+# Mouse support
+set -g mouse on
+
+# Start windows/indexes at 1
+set -g base-index 1
+setw -g pane-base-index 1
+
+# Use 256-color
+set -g default-terminal "screen-256color"
+
+
+# TPM
+set -g @plugin 'tmux-plugins/tpm'
+
+# Some useful plugins
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-continuum'
+set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
+#Copying to clipboard
+set -g @plugin 'tmux-plugins/tmux-yank'
+
+run '~/.tmux/plugins/tpm/tpm'
+
+
+# Vi mode
+setw -g mode-keys vi
+
+#Auto Yank
+bind -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel "xclip -selection clipboard -in"
+
+#Prefix Indicator
+set -g status-right '#{prefix_highlight} %Y-%m-%d %H:%M'
+
+#Styling kit for Prefix Indicator
+set -g @prefix_highlight_fg 'colour10'
+set -g @prefix_highlight_bg 'colour0'
+set -g @prefix_highlight_prefix_prompt 'PREFIX'
+set -g @prefix_highlight_show_copy_mode 'on'
+
